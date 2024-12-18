@@ -1,4 +1,4 @@
-name: Build NPM Package
+name: Build MAVEN Package
 on:
   push:
     branches: [ STAGE ]

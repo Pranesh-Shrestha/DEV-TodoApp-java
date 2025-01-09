@@ -1,0 +1,40 @@
+name: Java Build and List Dependencies
+
+on:
+  push:
+    branches:
+      - STAGE
+  pull_request:
+    branches:
+      - STAGE
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
+    - name: Cache Maven dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: List installed dependencies
+      run: mvn dependency:list
+
+    - name: List transitive dependencies
+      run: mvn dependency:tree

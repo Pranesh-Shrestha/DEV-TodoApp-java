@@ -1,0 +1,33 @@
+name: Java Maven Dependency Installation and Display
+
+on:
+  push:
+    branches:
+      - STAGE
+  pull_request:
+    branches:
+      - STAGE
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'  # Set your preferred Java version here
+          distribution: 'adoptopenjdk'
+
+      - name: Install dependencies using Maven
+        run: |
+          # Run Maven to install dependencies (it will skip already installed dependencies)
+          mvn install -B -DskipTests
+
+      - name: Display Installed Dependencies
+        run: |
+          echo "Displaying installed dependencies:"
+          mvn dependency:tree -Dverbose

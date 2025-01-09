@@ -31,3 +31,5 @@ jobs:
         run: |
           echo "Displaying installed dependencies:"
           mvn dependency:tree -Dverbose
+      - name: List Dependencies
+        run: mvn dependency:list

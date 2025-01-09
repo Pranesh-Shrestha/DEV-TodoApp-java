@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'  # Set your preferred Java version here
-          distribution: 'adoptopenjdk'
+          distribution: 'adoptium'
 
       - name: Install dependencies using Maven
         run: |
